@@ -1,0 +1,17 @@
+[package]
+name = "game-of-life"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# cpal = "0.15.2"
+# symphonia = "0.5.3"
+# rodio = "0.17.3"
+# druid = "0.8.3"
+# config = { version = "0.13.4", features = [] }
+
+embedded-graphics = "0.8.1"
+embedded-graphics-simulator = "0.6.0"
+sdl2 = { version = "0.35.1" }
