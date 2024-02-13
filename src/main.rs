@@ -18,6 +18,7 @@ fn main() -> Result<(), core::convert::Infallible> {
     let mut display = SimulatorDisplay::<BinaryColor>::new(Size::new(HEIGHT, WIDTH));
     let mid_x = (WIDTH as usize / 2);
     let mid_y = HEIGHT as usize / 2;
+    let mut is_freeze = false;
 
     let output_settings = OutputSettingsBuilder::new()
         .theme(BinaryColorTheme::OledBlue)
@@ -42,7 +43,10 @@ fn main() -> Result<(), core::convert::Infallible> {
 
     'game: loop{
         update_screen(array, &mut display);
-        array = evolve(array);
+        if (is_freeze == false){
+            array = evolve(array);
+        }
+
         std::thread::sleep(std::time::Duration::from_millis(*delay.borrow_mut() as u64)); // delay in ms
         window.update(&mut display);
 
@@ -57,7 +61,12 @@ fn main() -> Result<(), core::convert::Infallible> {
                 embedded_graphics_simulator::SimulatorEvent::KeyDown {keycode, ..} => {
                     match keycode{
                         Keycode::Space => {
-                            *delay.borrow_mut() = 2147483647; // max value of i32 basically stop the time for 3 weeks
+                            if is_freeze == false{
+                                is_freeze = true;
+                            }
+                            else {
+                                is_freeze = false;
+                            }
                         }
                         _ => {}
                     }
